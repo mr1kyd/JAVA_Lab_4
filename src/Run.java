@@ -31,13 +31,13 @@ public class Run {
                         System.out.print("Tank volume: ");
                         double tankVolume = sc.nextDouble();
                         int fuelID = selectID(helper, "inserting", "fuel", sc);
-                        helper.insertCar(carName, tankVolume, fuelID);
+                        helper.insertMotorcycle(carName, tankVolume, fuelID);
                         break;
                     case 4:
                         helper.deleteFuel(selectID(helper, "deleting", "fuel", sc));
                         break;
                     case 5:
-                        helper.deleteCar(selectID(helper, "deleting", "car", sc));
+                        helper.deleteMotorcycle(selectID(helper, "deleting", "car", sc));
                         break;
                 }
             }
@@ -51,7 +51,7 @@ public class Run {
             helper.selectFuel();
         }
         else if(table.equals("car")){
-            helper.selectCar();
+            helper.selectMotorcycle();
         }
         System.out.print("Select " + table + " id for " + action +": ");
         return sc.nextInt();

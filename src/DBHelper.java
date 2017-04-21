@@ -20,18 +20,18 @@ public class DBHelper {
     }
 
     public String selectAll(){
-        String query = "SELECT * FROM car LEFT JOIN fuel ON car.FUEL_ID = fuel.FUEL_ID";
-        StringBuffer result = new StringBuffer("|      car_name      |  tank_volume  |  fuel_type  |  fuel_cost |\n" +
+        String query = "SELECT * FROM motorcycle LEFT JOIN fuel ON motorcycle.FUEL_ID = fuel.FUEL_ID";
+        StringBuffer result = new StringBuffer("|   motorcycle_name   |  tank_volume  |  fuel_type  |  fuel_cost |\n" +
                         " ---------------------------------------------------------------\n");
         try {
             ResultSet rs = executeQuery(query);
             while(rs.next()){
-                String carName = rs.getString("car_name");
+                String motorcycleName  = rs.getString("m_name");
                 double tankVolume = rs.getDouble("tank_volume");
                 String fuelType = rs.getString("fuel_type");
                 double fuelCost = rs.getDouble("fuel_cost");
                 result.append("|");
-                result.append(format(20, carName));
+                result.append(format(20, motorcycleName));
                 result.append(format(15, String.valueOf(tankVolume)));
                 result.append(format(13, fuelType));
                 result.append(format(12, String.valueOf(fuelCost)));
@@ -67,20 +67,20 @@ public class DBHelper {
         return result.toString();
     }
 
-    public String selectCar(){
-        StringBuffer result = new StringBuffer("|  car_id  |      car_name      |  tank_volume  |  fuel_type  |\n" +
+    public String selectMotorcycle(){
+        StringBuffer result = new StringBuffer("|    id    |        name        |  tank_volume  |  fuel_type  |\n" +
                                                     " ----------------------------------------------------------- \n");
-        String query = "SELECT * FROM car INNER JOIN fuel ON car.fuel_id = fuel.fuel_id";
+        String query = "SELECT * FROM motorcycle INNER JOIN fuel ON motorcycle.fuel_id = fuel.fuel_id";
         try {
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()){
-                int carId = rs.getInt("car_id");
-                String carName = rs.getString("car_name");
+                int motorcycleId = rs.getInt("id");
+                String motorcycleName = rs.getString("m_name");
                 double tankVolume = rs.getDouble("tank_volume");
                 String fuelType = rs.getString("fuel_type");
                 result.append("|");
-                result.append(format(10, String.valueOf(carId)));
-                result.append(format(20, carName));
+                result.append(format(10, String.valueOf(motorcycleId)));
+                result.append(format(20, motorcycleName));
                 result.append(format(15, String.valueOf(tankVolume)));
                 result.append(format(11, fuelType));
                 result.append("\n -----------------------------------------------------------\n");
@@ -105,8 +105,8 @@ public class DBHelper {
         }
     }
 
-    public boolean insertCar(String carName, double tankVolume, int fuelID){
-        String query = "INSERT INTO car (car_name, tank_volume, fuel_id) VALUES (?, ?, ?)";
+    public boolean insertMotorcycle(String carName, double tankVolume, int fuelID){
+        String query = "INSERT INTO motorcycle (m_name, tank_volume, fuel_id) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, carName);
@@ -119,10 +119,10 @@ public class DBHelper {
         }
     }
 
-    public boolean deleteCar(int carID){
+    public boolean deleteMotorcycle(int motorcycleID){
         try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM car WHERE car_id = ?;");
-            ps.setInt(1, carID);
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM car WHERE id = ?;");
+            ps.setInt(1, motorcycleID);
             ps.execute();
             return true;
         } catch (SQLException e) {
